@@ -73,7 +73,18 @@ class MedicineController extends Controller
      */
     public function update(Request $request, Medicine $medicine)
     {
-        return view('medicines.edit', compact('medicine', 'types'));
+         $validated = $request->validate([
+            'name' => 'required|max:100',
+            'stock' => 'required|integer|min:1',
+            'expiry_date' => 'required',
+            'type_id' => 'required|exists:types,id',
+            'is_available' => 'required|boolean',
+        ]);
+
+        $medicine->update($validated);
+
+        return redirect()->route('medicines.index')
+            ->with('success', 'Medicine updated successfully');
     }
 
     /**
@@ -81,7 +92,11 @@ class MedicineController extends Controller
      */
     public function destroy(Medicine $medicine)
     {
-        //
+
+    $medicine->delete();
+
+    return redirect()->route('medicines.index');
+
     }
 
 

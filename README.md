@@ -1,12 +1,12 @@
-Part G
 
-G1: Which column did you turn into a table, and why that one and not another?
-I turned the type column into a separate types lookup table because medicine types (Tablet, Capsule, Syrup) come from a fixed list, repeat across many medicine records, and could eventually need their own attributes (like dosage instructions or storage rules).
+G1
+Route model binding needs two things to be true. Name both, and say what happens when only one of them is.
+The route parameter and controller parameter must have the same name, and the controller parameter must be type-hinted with the matching model. For example, `{medicine}` pairs with `Medicine $medicine`. If either condition is missing, Laravel cannot implicitly bind the route value to a `Medicine` model instance.
 
-G2: What number did screenshot 6 show, and why exactly that number?
+G2
+Your Delete link opened the detail page instead of deleting anything. Explain why.
+A normal `<a>` link sends a GET request, but Laravel's resource `destroy` route expects a DELETE request. The link also needs the ID of the specific medicine, not the collection of medicine types. Use a form with `@csrf` and `@method('DELETE')` that targets the current `$medicine`.
 
-It showed 6 queries because of the N+1 query problem before adding with('type'). Laravel ran 1 query to fetch all 5 medicines from the medicines table, and then ran 5 additional queries (1 for each of the 5 rows in the Blade loop) every time $medicine->type->name was accessed.
-
-G3: Your belongsTo method is named in the singular. What would break if you made it plural?
-
-Laravel automatically figures out which foreign key column to use by taking your method name and adding _id to the end of it. If I named the method types() in the plural instead of type(), Laravel would go looking for a column called types_id instead of type_id, fail to find the relationship, and crash the page when trying to display the type's name.
+G3
+old() takes a second argument on your edit form. What would break if you left it out, and what would break if you used only it?
+The second argument provides the medicine's saved value when there is no previous form submission. Without it, fields on the edit form may appear blank when first opened. Using only the saved value instead of `old('field', $medicine->field)` means the user's submitted value will not be restored after validation fails.

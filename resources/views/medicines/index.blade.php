@@ -40,6 +40,8 @@
                                 <th scope="col" class="text-center">Stock</th>
                                 <th scope="col">Type</th>
                                 <th scope="col">Expiry Date</th>
+                                <th scope="col">Action</th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -61,6 +63,17 @@
                                     <td><span class="badge bg-info-subtle text-info-emphasis">{{ $medicine->type->name }}</span>
                                     </td>
                                     <td>{{ $medicine['expiry_date'] }}</td>
+                                    <td>
+                                        <a class="btn btn-sm btn-outline-primary" href="{{ route('medicines.edit', $medicine) }}">Edit</a>
+                                        <form method="POST" onsubmit="return confirm('Are you Sure?');" action="{{ route('medicines.destroy', $medicine) }}">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                                        </form>
+
+
+                                    </td>
+
                                 </tr>
                             @empty
                                 <tr>
