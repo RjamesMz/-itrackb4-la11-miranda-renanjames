@@ -13,11 +13,11 @@ return new class extends Migration
     {
        Schema::create('medicines', function (Blueprint $table) {
     $table->id();
-    $table->string('name');          // short text
-    $table->integer('stock')->nullable();        // a whole number
-    $table->integer('expiry_date');        // true or false
-    $table->string('type');   // may be left empty
-    $table->boolean('is_available');   // may be left empty
+    $table->string('name');         
+    $table->integer('stock')->nullable();       
+    $table->integer('expiry_date');        
+    $table->string('type');   
+    $table->boolean('is_available');   
     $table->timestamps();
 });
 

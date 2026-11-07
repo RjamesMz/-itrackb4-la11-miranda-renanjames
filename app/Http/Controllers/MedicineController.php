@@ -84,27 +84,6 @@ class MedicineController extends Controller
         //
     }
 
-    public function filter($type = null)
-    {
-
-        $medicines = $this->medicines();
-        $result = [];
-
-        foreach ($medicines as $medicine) {
-            if ($type == null) {
-                $result[] = $medicine;
-            } elseif ($medicine['type'] == $type) {
-                $result[] = $medicine;
-            }
-        }
-
-        return view('medicines.filter', [
-            'medicines' => $result,
-            'filter' => $type,
-        ]);
-
-    }
-
 
 }
 
